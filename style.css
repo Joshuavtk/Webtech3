@@ -1,0 +1,10 @@
+.game {
+    display: flex;
+}
+
+.game_block {
+    width: 100px;
+    height: 100px;
+    background-color: greenyellow;
+    margin: 5px;
+}
