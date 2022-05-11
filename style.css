@@ -1,19 +1,44 @@
+:root {
+  --board-size: 6;
+}
+
 .game {
-    display: flex;
-    max-width: 700px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(var(--board-size), 1fr);
+    grid-gap: 5px;
+    /* max-width: 75vw; */
+    grid-auto-rows: 1fr;
+}
+
+.game::before {
+  content: '';
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.game > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 
 .game_block {
     display: flex;
+    height: same-as-width;
     align-items: center;
-    min-width: 100px;
-    height: 100px;
     background-color: greenyellow;
-    margin: 5px;
 }
 
 .block_inner {
     width: 100%;
     text-align: center;
+}
+
+.color_selectors {
+	min-width: 50px;
+}
+
+.color_selectors input {
+    align: right;
 }
