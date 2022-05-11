@@ -1,26 +1,61 @@
 :root {
-  --board-size: 6;
+    --board-size: 6;
+}
+
+p {
+    margin: 0;
+}
+
+body {
+    display: grid;
+
+    grid-template:
+        "info"
+        "board"
+        "scores";
+
+    align-items: center;
+    justify-items: center;
+    gap: 1em;
+}
+
+@media screen and (min-width: 700px) {
+    body {
+        display: grid;
+
+        grid-template:
+            "info ."
+            "board scores" 1fr / 1fr;
+    }
+}
+
+.game_info_top {
+    grid-area: info;
+    text-align: center;
 }
 
 .game {
+    width: 100%;
+    grid-area: board;
     display: grid;
     grid-template-columns: repeat(var(--board-size), 1fr);
     grid-gap: 5px;
+    max-width: 800px;
     /* max-width: 75vw; */
     grid-auto-rows: 1fr;
 }
 
 .game::before {
-  content: '';
-  width: 0;
-  padding-bottom: 100%;
-  grid-row: 1 / 1;
-  grid-column: 1 / 1;
+    content: "";
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
 }
 
 .game > *:first-child {
-  grid-row: 1 / 1;
-  grid-column: 1 / 1;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
 }
 
 .game_block {
@@ -30,9 +65,22 @@
     background-color: greenyellow;
 }
 
+.game_block + .selected {
+    background-color: red;
+}
+
+.game_block + .correct {
+    background-color: blue;
+}
+
 .block_inner {
     width: 100%;
     text-align: center;
+}
+
+.scorelist {
+    grid-area: scores;
+    margin-right: 1em;
 }
 
 .color_selectors {
@@ -40,4 +88,8 @@
     display: grid;
     width: fit-content;
     grid-gap: 5px;
+}
+
+.settings > * {
+    margin: 1em 0;
 }

@@ -1,82 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="game_info_top">
+            <h1>Javascript memory</h1>
 
-    <div class="game_info_top">
+            <p>Verlopen tijd: <span id="time_total">64</span> seconden.</p>
+            <p>Gevonden kaart-paren: <span id="pairs_found">1</span></p>
+            <p>Resterende toontijd:</p>
+            <progress id="remaining_time" max="100" value="70"></progress>
+        </div>
 
-        <h1>Javascript memory</h1>
+        <div class="game"></div>
 
-        <p>Verlopen tijd: <span id="time_total">64</span> seconden.</p>
-        <p>Gevonden kaart-paren: <span id="pairs_found">1</span></p>
-        <p>Resterende toontijd: </p>
-    </div>
+        <div class="scorelist">
+            <h3>Top vijf</h3>
+            <ol>
+                <li>Barack Obama: 200</li>
+                <li>Bernie Sanders: 300</li>
+                <li>Hillary Clinton: 400</li>
+                <li>Donald Trump: 500</li>
+                <li>Jeb Bush: 600</li>
+            </ol>
 
-    <div class="game">
-        <div class="game_block">
-            <div class="block_inner">
-                *
+            <p><b>Gemiddelde speeltijd:</b> 0s (64s)</p>
+
+            <div class="settings">
+                <p>
+                    <b>Karakter op kaarten:</b>
+                    <select>
+                        <option default>*</option>
+                    </select>
+                </p>
+
+                <p>
+                    <b>Afmeting bord:</b>
+                    <select>
+                        <option default>6</option>
+                    </select>
+                </p>
+
+                <div class="color_selectors">
+                    <label for="card_color_default"> Kaartkleur </label>
+                    <input
+                        type="color"
+                        value="#adff2f"
+                        id="card_color_default"
+                        name="card_color_default"
+                    />
+
+                    <label for="card_color_opened"> Open </label>
+                    <input
+                        type="color"
+                        value="#0000FF"
+                        id="card_color_opened"
+                        name="card_color_opened"
+                    />
+
+                    <label for="card_color_found"> Gevonden </label>
+                    <input
+                        type="color"
+                        value="#FF0000"
+                        id="card_color_found"
+                        name="card_color_found"
+                    />
+                </div>
+
+                <input type="button" value="Nieuw Spel" />
             </div>
         </div>
-    </div>
 
-<div class="scorelist">
-
-    <h3>Top vijf</h3>
-    <ol>
-        <li>Barack Obama: 200</li>
-        <li>Bernie Sanders: 300</li>
-        <li>Hillary Clinton: 400</li>
-        <li>Donald Trump: 500</li>
-        <li>Jeb Bush: 600</li>
-    </ol>
-
-    <p><b>Gemiddelde speeltijd:</b> 0s (64s)</p>
-
-    <p>
-        <b>Karakter op kaarten:</b>
-        <select>
-            <option default>*</option>
-        </select>
-    </p>
-
-    <p>
-        <b>Afmeting bord:</b>
-        <select>
-            <option default>6</option>
-        </select>
-    </p>
-
-
-<div class="color_selectors">
-    <label for="card_color_default">
-        Kaartkleur
-    </label>
-    <input type="color" id="card_color_default" name="card_color_default">
-
-    <label for="card_color_opened">
-        Open
-    </label>
-    <input type="color" id="card_color_opened" name="card_color_opened">
-
-    <label for="card_color_found">
-        Gevonden
-    </label>
-    <input type="color" id="card_color_found" name="card_color_found">
-</div>
-
-    <br />
-    <input type="button" value="Nieuw Spel">
-
-</div>
-
-    <script src="main.js"></script>
-
-</body>
+        <script src="main.js"></script>
+    </body>
 </html>
