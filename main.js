@@ -1,7 +1,28 @@
-let gameContainer = document.querySelector('.game')
+let gameContainer = document.querySelector(".game");
 
-let gameBlock = document.querySelector('.game_block')
+function createBlock() {
+    let gameBlock = document.createElement("div");
+    gameBlock.classList.add("game_block");
 
-for (let index = 1; index < Math.pow(6, 2); index++) {
-    gameContainer.append(gameBlock.cloneNode(true))
+    let gameBlockText = document.createElement("div");
+    gameBlockText.innerText = "*";
+    gameBlockText.classList.add("block_inner");
+
+    gameBlock.appendChild(gameBlockText);
+
+    return gameBlock;
+}
+
+for (let index = 0; index < Math.pow(6, 2); index++) {
+    let block = createBlock();
+
+    if (Math.random() < 0.15) {
+        block.classList.add("selected");
+    }
+
+    if (Math.random() < 0.15) {
+        block.classList.add("correct");
+    }
+
+    gameContainer.append(block);
 }
