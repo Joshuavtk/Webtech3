@@ -36,9 +36,8 @@
 }
 
 .color_selectors {
-	min-width: 50px;
-}
-
-.color_selectors input {
-    align: right;
+    grid-template: "a b";
+    display: grid;
+    width: fit-content;
+    grid-gap: 5px;
 }
