@@ -79,6 +79,8 @@ body {
     text-align: center;
 }
 
+#remaining_time { width: 15em; }
+
 .scorelist {
     grid-area: scores;
     margin-right: 1em;
