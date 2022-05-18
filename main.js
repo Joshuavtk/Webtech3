@@ -1,11 +1,16 @@
-let gameContainer = document.querySelector(".game");
+const gameOptions = {
+    boardSize: 6,
+    selectedColor: "#",
+}
 
-function createBlock() {
+const gameContainer = document.querySelector(".game");
+
+function createBlock(value) {
     let gameBlock = document.createElement("div");
     gameBlock.classList.add("game_block");
 
     let gameBlockText = document.createElement("div");
-    gameBlockText.innerText = "*";
+    gameBlockText.innerText = value;
     gameBlockText.classList.add("block_inner");
 
     gameBlock.appendChild(gameBlockText);
@@ -36,18 +41,25 @@ for (let index = 0; index < Math.pow(6, 2) / 2; index++) {
     	letterArray.push(cardValue);
 }
 
+letterArray.push(...letterArray)
+
+
+letterArray = letterArray
+  .map(value => ({ value, sort: Math.random() }))
+  .sort((a, b) => a.sort - b.sort)
+  .map(({ value }) => value)
+
 for (let index = 0; index < Math.pow(6, 2); index++) {
-    let block = createBlock();
-
-    block.innerText = cardValue;
-
-    if (Math.random() < 0.15) {
-        block.classList.add("selected");
-    }
-
-    if (Math.random() < 0.15) {
-        block.classList.add("correct");
-    }
+    let block = createBlock(letterArray[index]);
 
     gameContainer.append(block);
 }
+
+
+document.querySelector('.game').addEventListener("click", el => {
+    let selectedBlock = el.target
+    if (selectedBlock.classList.contains("game")) return
+    if (selectedBlock.classList.contains("block_inner")) {
+        selectedBlock = selectedBlock.parentElement
+    }
+})
