@@ -27,12 +27,10 @@ function getNewRandomValueFromArray(currentArray, randomArray) {
 	return cardValue;
 }
 
-const alphabet = ['a', 'b', 'c', 'd', 'e',
-	          'f', 'g', 'h', 'i', 'j',
-                  'k', 'l', 'm', 'n', 'o',
-                  'p', 'q', 'r', 's', 't',
-                  'u', 'v', 'w', 'x', 'y',
-                  'z'];
+const alphabet = [
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+];
 
 let letterArray = [];
 
@@ -56,10 +54,19 @@ for (let index = 0; index < Math.pow(6, 2); index++) {
 }
 
 
+let currentlySelectedBlock = null;
+
 document.querySelector('.game').addEventListener("click", el => {
     let selectedBlock = el.target
     if (selectedBlock.classList.contains("game")) return
     if (selectedBlock.classList.contains("block_inner")) {
         selectedBlock = selectedBlock.parentElement
     }
+
+    if (currentlySelectedBlock) {
+        if (currentlySelectedBlock.innerText == selectedBlock.innerText) {
+            console.log("match");
+        }
+    }
+    console.log(selectedBlock);
 })
