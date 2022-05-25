@@ -1,5 +1,5 @@
 const gameOptions = {
-    boardSize: 6,
+    boardSize: 2,
     selectedColor: "#",
 }
 
@@ -20,7 +20,7 @@ function createBlock(value, index) {
     blockValue.classList.add("value");
 
     let blockPlaceholder = document.createElement("div");
-    blockPlaceholder.innerText = "*";
+    blockPlaceholder.innerHTML = "<p>*</p>";
     blockPlaceholder.classList.add("placeholder");
 
     gameBlockInner.appendChild(blockValue);
@@ -50,7 +50,7 @@ const alphabet = [
 
 let letterArray = [];
 
-for (let index = 0; index < Math.pow(6, 2) / 2; index++) {
+for (let index = 0; index < Math.pow(gameOptions.boardSize, 2) / 2; index++) {
     let cardValue = getNewRandomValueFromArray(letterArray, alphabet);
     letterArray.push([cardValue, index]);
 }
@@ -63,7 +63,7 @@ letterArray = letterArray
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value)
 
-for (let index = 0; index < Math.pow(6, 2); index++) {
+for (let index = 0; index < Math.pow(gameOptions.boardSize, 2); index++) {
     let block = createBlock(letterArray[index][0], letterArray[index][1]);
 
     gameContainer.append(block);
@@ -93,12 +93,12 @@ document.querySelector('.game').addEventListener("click", el => {
 
     if (currentlySelectedBlock) {
         if (currentlySelectedBlock == selectedBlock.dataset.id) {
-            console.log(el.target);
-            console.log("match");
             document.querySelectorAll(`div[data-id="${currentlySelectedBlock}"]`)
                 .forEach(el => el.classList.add('correct'))
+            if (!document.querySelectorAll(".game_block:not(.correct)").length) {
+                document.querySelector('.win_screen').classList.add('show')
+            }
         } else {
-            console.log('geen match');
         }
         setTimeout(() => {
             document.querySelectorAll(".selected").forEach(el => el.classList.remove('selected'))
@@ -108,3 +108,32 @@ document.querySelector('.game').addEventListener("click", el => {
         currentlySelectedBlock = selectedBlock.dataset.id
     }
 })
+
+let win_screen = document.querySelector(".win_screen")
+win_screen.addEventListener("click", () => {
+    win_screen.classList.remove("show")
+})
+
+function updateCardColor(variable, color) {
+
+    document.querySelector(':root')
+    .style.setProperty(
+        variable, 
+        color
+    )
+}
+
+document.querySelector("#card_color_default")
+    .addEventListener("change", ev => {
+        updateCardColor('--card-color-default', ev.target.value)
+    })
+
+document.querySelector("#card_color_selected")
+    .addEventListener("change", ev => {
+        updateCardColor('--card-color-selected', ev.target.value)
+    })
+
+document.querySelector("#card_color_correct")
+    .addEventListener("change", ev => {
+        updateCardColor('--card-color-correct', ev.target.value)
+    })
