@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
 
-        <div class="win_screen">
-            <div class="congrats">
-                <h2>
-                    Je hebt gewonnen!
-                </h2>
-                <p>
-                    Klik om door te gaan
-                </p>
-            </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="win_screen">
+        <div class="congrats">
+            <h2>
+                Je hebt gewonnen!
+            </h2>
+            <p>
+                Klik om door te gaan
+            </p>
+        </div>
+    </div>
+
+    <div class="wrapper">
+
+        <div class="game_info_top">
+            <h1>Javascript memory</h1>
+
+            <p>Verlopen tijd: <span id="time_total">64</span> seconden.</p>
+            <p>Gevonden kaart-paren: <span id="pairs_found">1</span></p>
+            <p>Resterende toontijd:</p>
+            <progress id="remaining_time" max="100" value="70"></progress>
         </div>
 
-        <div class="wrapper">
-
-            <div class="game_info_top">
-                <h1>Javascript memory</h1>
-                
-                <p>Verlopen tijd: <span id="time_total">64</span> seconden.</p>
-                <p>Gevonden kaart-paren: <span id="pairs_found">1</span></p>
-                <p>Resterende toontijd:</p>
-                <progress id="remaining_time" max="100" value="70"></progress>
-            </div>
-            
         <div class="game"></div>
 
         <div class="scorelist">
-            <h3>Top vijf</h3>
+            <b>Top vijf</b>
             <ol>
                 <li>Barack Obama: 200</li>
                 <li>Bernie Sanders: 300</li>
@@ -42,55 +44,50 @@
                 <li>Donald Trump: 500</li>
                 <li>Jeb Bush: 600</li>
             </ol>
-            
+
             <p><b>Gemiddelde speeltijd:</b> 0s (64s)</p>
-            
+
             <div class="settings">
                 <p>
                     <b>Karakter op kaarten:</b>
-                    <select>
-                        <option default>*</option>
+                    <select aria-label="Verander karakters op kaarten" id="card_type">
+                        <option id="alphabet" selected>Alfabet</option>
+                        <option id="picsum">Willekeurige afbeeldingen</option>
+                        <option id="reddit">/r/Art Subreddit</option>
+                        <option id="dogceo">Honden</option>
                     </select>
                 </p>
-                
+
                 <p>
                     <b>Afmeting bord:</b>
-                    <select>
-                        <option default>6</option>
+                    <select aria-label="Verander afmeting bord" id="board_size">
+                        <option>2</option>
+                        <option>4</option>
+                        <option selected>6</option>
+                        <option>8</option>
                     </select>
                 </p>
-                
+
                 <div class="color_selectors">
                     <label for="card_color_default"> Kaartkleur </label>
-                    <input
-                    type="color"
-                    value="#adff2f"
-                    id="card_color_default"
-                    name="card_color_default"
-                    />
-                    
+                    <input aria-label="Verander standaard kleur kaarten" type="color" value="#adff2f"
+                        id="card_color_default" name="card_color_default" />
+
                     <label for="card_color_selected"> Open </label>
-                    <input
-                    type="color"
-                    value="#0000FF"
-                    id="card_color_selected"
-                    name="card_color_selected"
-                    />
-                    
+                    <input aria-label="Verander kleur open kaarten" type="color" value="#0000FF"
+                        id="card_color_selected" name="card_color_selected" />
+
                     <label for="card_color_correct"> Gevonden </label>
-                    <input
-                        type="color"
-                        value="#FF0000"
-                        id="card_color_correct"
-                        name="card_color_correct"
-                    />
+                    <input aria-label="Verander kleur gevonden kaarten" type="color" value="#FF0000"
+                        id="card_color_correct" name="card_color_correct" />
                 </div>
 
-                <input type="button" value="Nieuw Spel" />
+                <input onclick="initialize()" type="button" value="Nieuw Spel" />
             </div>
         </div>
     </div>
-        
-        <script src="main.js"></script>
-    </body>
+
+    <script src="main.js"></script>
+</body>
+
 </html>

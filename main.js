@@ -1,139 +1,279 @@
 const gameOptions = {
-    boardSize: 2,
+    boardSize: 6,
     selectedColor: "#",
+    cardType: 'alphabet'
 }
 
-const gameContainer = document.querySelector(".game");
-
-function createBlock(value, index) {
-    let gameBlock = document.createElement("div");
-    gameBlock.classList.add("game_block");
-    gameBlock.setAttribute("data-id", index)
-
-    let gameBlockInner = document.createElement("div");
-    gameBlockInner.classList.add("block_inner");
-
-    gameBlock.appendChild(gameBlockInner);
-
-    let blockValue = document.createElement("div");
-    blockValue.innerText = value;
-    blockValue.classList.add("value");
-
-    let blockPlaceholder = document.createElement("div");
-    blockPlaceholder.innerHTML = "<p>*</p>";
-    blockPlaceholder.classList.add("placeholder");
-
-    gameBlockInner.appendChild(blockValue);
-    gameBlockInner.appendChild(blockPlaceholder);
-
-
-    return gameBlock;
-}
-
-function getNewRandomValueFromArray(currentArray, randomArray) {
-    let cardValue = randomArray[Math.floor(Math.random() * randomArray.length)];
-
-    // console.log(currentArray);
-    for (const val of currentArray) {
-        // console.log(val[0] == cardValue);
-        if (val[0] == cardValue) {
-            return getNewRandomValueFromArray(currentArray, randomArray);
-        }
-    }
-    return cardValue;
-}
-
+const gameContainer = document.querySelector(".game")
+const cardStates = ["default", "selected", "correct"]
 const alphabet = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-];
+]
 
-let letterArray = [];
+let cardNum = Math.pow(gameOptions.boardSize, 2)
 
-for (let index = 0; index < Math.pow(gameOptions.boardSize, 2) / 2; index++) {
-    let cardValue = getNewRandomValueFromArray(letterArray, alphabet);
-    letterArray.push([cardValue, index]);
+// Initialization
+function purgeGameBoard() {
+    document.querySelector('.game').innerHTML = ""
 }
 
-letterArray.push(...letterArray)
+function updateBoardCSS() {
+    document.querySelector(':root')
+        .style.setProperty(
+            "--board-size",
+            gameOptions.boardSize
+        )
+}
 
+function initialize() {
+    purgeGameBoard()
+    updateBoardCSS()
 
-letterArray = letterArray
-    .map(value => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value)
+    cardNum = Math.pow(gameOptions.boardSize, 2)
 
-for (let index = 0; index < Math.pow(gameOptions.boardSize, 2); index++) {
-    let block = createBlock(letterArray[index][0], letterArray[index][1]);
-
-    gameContainer.append(block);
+    switch (gameOptions.cardType) {
+        case "picsum":
+            createPicsumBoard()
+            break;
+        case "dogceo":
+            createDogCeoBoard()
+            break;
+        case "reddit":
+            createRedditBoard()
+            break;
+        case "alphabet":
+        default:
+            createAlphabetBoard()
+    }
 }
 
 
-let currentlySelectedBlock = null;
+// API's
+function getDogPictures(imageCount) {
+    return fetch(`https://dog.ceo/api/breeds/image/random/${imageCount}`)
+        .then(data => data.json())
+        .then(data => data.message)
+}
 
-document.querySelector('.game').addEventListener("click", el => {
-    let selectedBlock = el.target
+function getRandomPicture() {
+    return fetch("https://picsum.photos/200")
+        .then(response => response.url)
+}
+
+
+// Get value and check if there is no duplicate recursively
+function getNewRandomValueFromArray(currentArray, randomArray) {
+    let cardValue = randomArray[Math.floor(Math.random() * randomArray.length)]
+
+    for (const val of currentArray) {
+        if (val[0] == cardValue) {
+            return getNewRandomValueFromArray(currentArray, randomArray)
+        }
+    }
+    return cardValue
+}
+
+function getRandomValue(currentArray, getFunction) {
+    return getFunction().then(cardValue => {
+        for (const val of currentArray) {
+            if (val[0] == cardValue) {
+                return getNewRandomValueFromArray(currentArray, getFunction)
+            }
+        }
+        return cardValue
+    })
+}
+
+// Board creation w/wo API
+function createAlphabetBoard() {
+    let cardValues = []
+    for (let index = 0; index < cardNum / 2; index++) {
+        let cardValue = getNewRandomValueFromArray(cardValues, alphabet)
+        cardValues.push([cardValue, index])
+    }
+    createCardBlocks(cardValues, "text")
+}
+
+function createPicsumBoard() {
+    let cardValues = []
+    for (let index = 0; index < cardNum / 2; index++) {
+
+        getRandomValue(cardValues, getRandomPicture).then(cardValue => {
+            cardValues.push([cardValue, index])
+            if (cardValues.length == cardNum / 2) {
+                createCardBlocks(cardValues, "image")
+            }
+        })
+    }
+}
+
+function createRedditBoard() {
+    const subreddit = 'art'
+    return fetch(`http://www.reddit.com/r/${subreddit}.json?limit=100&sort=top&t=all'.format(subreddit=srr))`)
+        .then(data => data.json())
+        .then(data => {
+
+            let pictureCount = 0
+            let pictures = []
+            let index = 2
+            while (pictureCount < cardNum / 2) {
+
+                let post = data['data']['children'][index]['data']
+                if (post['is_reddit_media_domain'] && !post['is_video']) {
+                    pictureCount++
+                    pictures.push([post['url'], index])
+                }
+                index++
+                if (index >= data['data']['children'].length) {
+                    break
+                }
+            }
+
+            createCardBlocks(pictures, "image")
+        })
+}
+
+function createDogCeoBoard() {
+    let cardValues = []
+    getDogPictures(cardNum / 2).then(data => {
+        data.forEach((cardValue, index) => cardValues.push([cardValue, index]))
+        createCardBlocks(cardValues, "image")
+    })
+}
+
+// Board Creation
+function createCardBlocks(cardValues, type) {
+    // Duplicate values in array
+    cardValues.push(...cardValues)
+
+    // Shuffle array
+    cardValues = cardValues
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
+
+    for (let index = 0; index < cardNum; index++) {
+        let card = createCard(cardValues[index][0], cardValues[index][1], type)
+
+        gameContainer.append(card)
+    }
+}
+
+function createCard(value, index, type) {
+    let gameBlock = document.createElement("div")
+    gameBlock.classList.add("game_block")
+    gameBlock.setAttribute("data-id", index)
+
+    let gameBlockInner = document.createElement("div")
+    gameBlockInner.classList.add("block_inner")
+
+    gameBlock.appendChild(gameBlockInner);
+    let blockValue
+    if (type == "text") {
+        blockValue = document.createElement("div")
+        blockValue.innerText = value;
+        blockValue.classList.add("value")
+    } else {
+        blockValue = document.createElement("div")
+        blockValue.style.backgroundImage = `url("${value}")`
+        blockValue.classList.add("value")
+    }
+
+    let blockPlaceholder = document.createElement("div")
+    blockPlaceholder.innerHTML = "*"
+    blockPlaceholder.classList.add("placeholder")
+
+    gameBlockInner.appendChild(blockValue)
+    gameBlockInner.appendChild(blockPlaceholder)
+
+    return gameBlock
+}
+
+
+function checkIfSelectedOrCorrect(selectedBlock) {
 
     if (!(selectedBlock.classList.contains("game_block")
         || selectedBlock.classList.contains("block_inner")
         || selectedBlock.classList.contains("placeholder"))) {
-        return
+        return false
     }
 
-    if (selectedBlock.classList.contains("block_inner")) {
-        selectedBlock = selectedBlock.parentElement
+    if (selectedBlock.classList.contains("selected")
+        || selectedBlock.classList.contains("correct")) {
+        return false
     }
-    if (selectedBlock.classList.contains("placeholder")) {
-        selectedBlock = selectedBlock.parentElement.parentElement
-    }
-    if (selectedBlock.classList.contains("selected") || selectedBlock.classList.contains("correct")) return
 
-    selectedBlock.classList.add('selected')
+    return true
+}
 
-    if (currentlySelectedBlock) {
-        if (currentlySelectedBlock == selectedBlock.dataset.id) {
-            document.querySelectorAll(`div[data-id="${currentlySelectedBlock}"]`)
-                .forEach(el => el.classList.add('correct'))
-            if (!document.querySelectorAll(".game_block:not(.correct)").length) {
-                document.querySelector('.win_screen').classList.add('show')
-            }
-        } else {
-        }
-        setTimeout(() => {
+// Event listeners
+function gameHandler() {
+    let currentlySelectedBlock = null
+    let resetOnNextClick = false
+
+    // Handling clicks on cards
+    gameContainer.addEventListener("click", el => {
+        let selectedBlock = el.target
+
+        if (selectedBlock.classList.contains("block_inner")) selectedBlock = selectedBlock.parentElement
+        if (selectedBlock.classList.contains("placeholder")) selectedBlock = selectedBlock.parentElement.parentElement
+
+        if (!checkIfSelectedOrCorrect(selectedBlock)) return
+
+        if (resetOnNextClick) {
             document.querySelectorAll(".selected").forEach(el => el.classList.remove('selected'))
-        }, 1000)
-        currentlySelectedBlock = null
-    } else {
-        currentlySelectedBlock = selectedBlock.dataset.id
-    }
-})
+            resetOnNextClick = false
+        }
 
+        selectedBlock.classList.add('selected')
+
+        if (currentlySelectedBlock) {
+            if (currentlySelectedBlock == selectedBlock.dataset.id) {
+                document.querySelectorAll(`div[data-id="${currentlySelectedBlock}"]`)
+                    .forEach(el => el.classList.add('correct'))
+                if (!document.querySelectorAll(".game_block:not(.correct)").length) {
+                    document.querySelector('.win_screen').classList.add('show')
+                }
+            } else {
+                resetOnNextClick = true
+            }
+            currentlySelectedBlock = null
+        } else {
+            currentlySelectedBlock = selectedBlock.dataset.id
+        }
+    })
+}
+
+// Handling win screen
 let win_screen = document.querySelector(".win_screen")
 win_screen.addEventListener("click", () => {
     win_screen.classList.remove("show")
 })
 
+// Setting event listeners
 function updateCardColor(variable, color) {
-
     document.querySelector(':root')
-    .style.setProperty(
-        variable, 
-        color
-    )
+        .style.setProperty(variable, color)
 }
 
-document.querySelector("#card_color_default")
-    .addEventListener("change", ev => {
-        updateCardColor('--card-color-default', ev.target.value)
-    })
+cardStates.forEach((cardState, index) => {
+    document.querySelector(`#card_color_${cardState}`)
+        .addEventListener("change", ev => {
+            updateCardColor(`--card-color-${cardState}`, ev.target.value)
+        })
+})
 
-document.querySelector("#card_color_selected")
-    .addEventListener("change", ev => {
-        updateCardColor('--card-color-selected', ev.target.value)
-    })
+document.querySelector("#card_type")
+    .addEventListener("change", ev =>
+        gameOptions.cardType = ev.target[ev.target.selectedIndex].id
+    )
 
-document.querySelector("#card_color_correct")
-    .addEventListener("change", ev => {
-        updateCardColor('--card-color-correct', ev.target.value)
-    })
+document.querySelector("#board_size")
+    .addEventListener("change", ev =>
+        gameOptions.boardSize = ev.target[ev.target.selectedIndex].value
+    )
+
+// Start default game
+gameHandler()
+initialize()
