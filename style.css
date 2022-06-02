@@ -1,207 +1,219 @@
 /* Globals */
 :root {
-    --board-size: 2;
-    --card-color-default: greenyellow;
-    --card-color-selected: blue;
-    --card-color-correct: red;
+  --board-size: 2;
+  --card-color-default: greenyellow;
+  --card-color-selected: blue;
+  --card-color-correct: red;
 }
 
 p {
-    margin: 0;
+  margin: 0;
 }
 
 html {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-
 .wrapper {
-    display: grid;
+  display: grid;
 
-    grid-template:
-        "info"
-        "board"
-        "scores";
+  grid-template:
+    "info"
+    "board"
+    "scores";
 
-    align-items: center;
-    justify-items: center;
-    gap: 1em;
+  align-items: center;
+  justify-items: center;
+  gap: 1em;
 }
 
 /* Victory screen */
 .congrats {
-    opacity: 1;
+  opacity: 1;
 }
 
 .win_screen {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0,0,66, .3);
-    z-index: 1000;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    background-image: url("https://media0.giphy.com/media/5jT0jaNDsM6Ik7X9yq/giphy.gif");
-    font-weight: bold;
-    background-size: cover;
-    opacity: 0.7;
-    display: none;
-    text-align: center;
-    cursor: pointer;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 66, 0.3);
+  z-index: 1000;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  background-image: url("https://media0.giphy.com/media/5jT0jaNDsM6Ik7X9yq/giphy.gif");
+  font-weight: bold;
+  background-size: cover;
+  opacity: 0.7;
+  display: none;
+  text-align: center;
+  cursor: pointer;
 }
 
 .win_screen h2 {
-    font-size: 2.5em;
+  font-size: 2.5em;
 }
 
 .win_screen.show {
-    display: flex;
+  display: flex;
 }
 
 /* Game board */
 .game {
-    cursor: pointer;
-    width: 100%;
-    grid-area: board;
-    display: grid;
-    grid-template-columns: repeat(var(--board-size), 1fr);
-    gap: 1px;
-    max-width: 800px;
-    grid-auto-rows: 1fr;
-    user-select: none; 
+  cursor: pointer;
+  width: 100%;
+  grid-area: board;
+  display: grid;
+  grid-template-columns: repeat(var(--board-size), 1fr);
+  gap: 1px;
+  max-width: 800px;
+  grid-auto-rows: 1fr;
+  user-select: none;
 }
 
-.game .correct, .game .selected {
-    cursor: default;
+.game .correct,
+.game .selected {
+  cursor: default;
 }
 
-.game_block.selected .block_inner, .game_block.correct .block_inner {
-    box-shadow: inset 0px 0px 15px 0px #00000030;
-    transform: rotateY(180deg);
+.game_block.selected .block_inner,
+.game_block.correct .block_inner {
+  box-shadow: inset 0px 0px 15px 0px #00000030;
+  transform: rotateY(180deg);
 }
 
 .game::before {
-    content: "";
-    width: 0;
-    padding-bottom: 100%;
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
+  content: "";
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 
 .game > *:first-child {
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 
 /* Game Blocks */
 .game_block {
-    transition: .15s, box-shadow .5s;
-    display: flex;
-    align-items: center;
-    perspective: 1000px;
+  transition: 0.15s, box-shadow 0.5s;
+  display: flex;
+  align-items: center;
+  perspective: 1000px;
 }
 
 .game_block.selected .value {
-    color: white;
+  color: white;
 }
 
-.game_block.correct .value{
-    background-color: var(--card-color-correct);
-    color: white;
+.game_block.correct .value {
+  background-color: var(--card-color-correct);
+  color: white;
 }
 
 .block_inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.5s, .5s;
+  transition: transform 0.5s;
   transform-style: preserve-3d;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
 }
 
 .placeholder {
-    background-color: var(--card-color-default);
+  background-color: var(--card-color-default);
 }
 
-.placeholder, .value {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+.placeholder,
+.value {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    font-size: 2em;
-    color: white; 
-    mix-blend-mode: difference;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Safari */
+  font-size: 2em;
+  color: white;
+  transform-style: preserve-3d;
+
+  /* Breaks firefox */
+  /* mix-blend-mode: difference; */
 }
 
 .value {
-    background-color: var(--card-color-selected);
-    transform: rotateY(180deg);
+  background-color: var(--card-color-selected);
+  transform: rotateY(180deg);
 
-    background-size: calc(100% - 5px) calc(100% - 5px);
-    background-repeat: no-repeat;
-    background-position: center;
+  background-size: calc(100% - 5px) calc(100% - 5px);
+  background-repeat: no-repeat;
+  background-position: center;transform-style: preserve-3d;
 }
-
 
 /* Game info */
 .game_info_top {
-    grid-area: info;
-    text-align: center;
+  grid-area: info;
+  text-align: center;
 }
 
-#remaining_time { width: 15em; }
-
+#remaining_time {
+  width: 15em;
+}
 
 /* Side bar */
 .scorelist {
-    grid-area: scores;
-    margin-right: 1em;
+  grid-area: scores;
+  margin-right: 1em;
 }
 
 .color_selectors {
-    grid-template: "a b";
-    display: grid;
-    width: fit-content;
-    grid-gap: 5px 20px;
+  grid-template: "a b";
+  display: grid;
+  width: fit-content;
+  grid-gap: 5px 20px;
 }
 
 .settings > * {
-    margin: 1em 0;
+  margin: 1em 0;
+}
+
+#unsaved_changes {
+    display: none;
+    margin-bottom: 0;
+    font-size: 0.9em;
+    color: red;
 }
 
 /* Desktop */
 @media screen and (min-width: 700px) {
-    .wrapper {
-        display: grid;
+  .wrapper {
+    display: grid;
 
-        grid-template:
-            "info ."
-            "board scores" 1fr / 1fr;
-    }
-    
-    .game {
-        gap: 5px;
-    }
-    
-    .value {
-        background-size: calc(100% - 10px) calc(100% - 10px);
-    }
+    grid-template:
+      "info ."
+      "board scores" 1fr / 1fr;
+  }
 
+  .game {
+    gap: 5px;
+  }
+
+  .value {
+    background-size: calc(100% - 10px) calc(100% - 10px);
+  }
 }

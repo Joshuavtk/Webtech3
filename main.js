@@ -16,6 +16,7 @@ let cardNum = Math.pow(gameOptions.boardSize, 2)
 // Initialization
 function purgeGameBoard() {
     document.querySelector('.game').innerHTML = ""
+    document.querySelector("#unsaved_changes").style.setProperty('display', 'none')
 }
 
 function updateBoardCSS() {
@@ -31,7 +32,7 @@ function initialize() {
     updateBoardCSS()
 
     cardNum = Math.pow(gameOptions.boardSize, 2)
-
+    console.log(gameOptions.cardType)
     switch (gameOptions.cardType) {
         case "picsum":
             createPicsumBoard()
@@ -264,16 +265,25 @@ cardStates.forEach((cardState, index) => {
         })
 })
 
-document.querySelector("#card_type")
-    .addEventListener("change", ev =>
-        gameOptions.cardType = ev.target[ev.target.selectedIndex].id
-    )
+document.querySelector("#card_type").addEventListener("change", updateCardType)
 
-document.querySelector("#board_size")
-    .addEventListener("change", ev =>
-        gameOptions.boardSize = ev.target[ev.target.selectedIndex].value
-    )
+function updateCardType() {
+    let dropdown = document.querySelector("#card_type")
+    gameOptions.cardType = dropdown[dropdown.selectedIndex].id
+    console.log(gameOptions.cardType)
+    document.querySelector("#unsaved_changes").style.setProperty('display', 'block')
+}
+
+document.querySelector("#board_size").addEventListener("change", updateBoardSize)
+
+function updateBoardSize() {
+    let dropdown = document.querySelector("#board_size")
+    gameOptions.boardSize = dropdown[dropdown.selectedIndex].value
+    document.querySelector("#unsaved_changes").style.setProperty('display', 'block')
+}
 
 // Start default game
 gameHandler()
+updateCardType()
+updateBoardSize()
 initialize()
