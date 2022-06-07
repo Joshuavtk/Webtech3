@@ -1,7 +1,10 @@
 const gameOptions = {
     boardSize: 6,
     selectedColor: "#",
-    cardType: 'alphabet'
+    cardType: 'alphabet',
+    jwt: "",
+    username: "",
+    user_role: ""
 }
 
 const gameContainer = document.querySelector(".game")
@@ -27,12 +30,29 @@ function updateBoardCSS() {
         )
 }
 
+function getJWT() {
+    let JWT = localStorage.getItem("JWT")
+    
+    if (JWT) {
+
+        var base64Url = JWT.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        console.log(jsonPayload)
+        return JSON.parse(jsonPayload);
+    } else {
+        console.log('not logged in')
+    }
+}
+
 function initialize() {
+    getJWT()
     purgeGameBoard()
     updateBoardCSS()
 
     cardNum = Math.pow(gameOptions.boardSize, 2)
-    console.log(gameOptions.cardType)
     switch (gameOptions.cardType) {
         case "picsum":
             createPicsumBoard()
@@ -269,8 +289,7 @@ document.querySelector("#card_type").addEventListener("change", updateCardType)
 
 function updateCardType() {
     let dropdown = document.querySelector("#card_type")
-    gameOptions.cardType = dropdown[dropdown.selectedIndex].id
-    console.log(gameOptions.cardType)
+    gameOptions.cardType = dropdown[dropdown.selectedIndex].index
     document.querySelector("#unsaved_changes").style.setProperty('display', 'block')
 }
 
