@@ -2,7 +2,6 @@
 :root {
   --board-size: 2;
   --card-color-default: greenyellow;
-  --card-color-selected: blue;
   --card-color-correct: red;
 }
 
@@ -118,6 +117,7 @@ body {
 .game_block.correct .value {
   background-color: var(--card-color-correct);
   color: white;
+  background-size: calc(100% - 5px) calc(100% - 5px);
 }
 
 .block_inner {
@@ -157,10 +157,10 @@ body {
 }
 
 .value {
-  background-color: var(--card-color-selected);
+  background-color: blue;
   transform: rotateY(180deg);
 
-  background-size: calc(100% - 5px) calc(100% - 5px);
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;transform-style: preserve-3d;
 }
@@ -213,7 +213,7 @@ body {
     gap: 5px;
   }
 
-  .value {
+  .game_block.correct .value {
     background-size: calc(100% - 10px) calc(100% - 10px);
   }
 }

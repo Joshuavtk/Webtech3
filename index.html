@@ -37,27 +37,22 @@
 
         <div class="scorelist">
             <b>Top vijf</b>
-            <ol>
-                <li>Barack Obama: 200</li>
-                <li>Bernie Sanders: 300</li>
-                <li>Hillary Clinton: 400</li>
-                <li>Donald Trump: 500</li>
-                <li>Jeb Bush: 600</li>
+            <ol id="user_scores">
             </ol>
 
             <p><b>Gemiddelde speeltijd:</b> 0s (64s)</p>
 
             <div class="settings">
                 <p>
-                    <a href="register.html">Registreren</a>
+                    <a href="account.html">Account instellingen</a>
+                    <a href="login.html" id="log_out">Log uit</a>
                 </p>
                 <p>
                     <b>Karakter op kaarten:</b>
                     <select aria-label="Verander karakters op kaarten" id="card_type">
-                        <option id="alphabet" selected>Alfabet</option>
+                        <option id="dogceo">Honden</option>
                         <option id="picsum">Willekeurige afbeeldingen</option>
                         <option id="reddit">/r/Art Subreddit</option>
-                        <option id="dogceo">Honden</option>
                     </select>
                 </p>
 
@@ -76,10 +71,6 @@
                     <input aria-label="Verander standaard kleur kaarten" type="color" value="#adff2f"
                         id="card_color_default" name="card_color_default" />
 
-                    <label for="card_color_selected"> Open </label>
-                    <input aria-label="Verander kleur open kaarten" type="color" value="#0000FF"
-                        id="card_color_selected" name="card_color_selected" />
-
                     <label for="card_color_correct"> Gevonden </label>
                     <input aria-label="Verander kleur gevonden kaarten" type="color" value="#FF0000"
                         id="card_color_correct" name="card_color_correct" />
@@ -87,10 +78,13 @@
 
                 <p id="unsaved_changes">Klik om wijzigingen op te slaan:</p>
                 <input onclick="initialize()" type="button" value="Nieuw Spel" />
+                
+                <input onclick="setUserPreferences()" type="button" value="Sla voorkeuren op" />
             </div>
         </div>
     </div>
 
+    <script src="jwt.js"></script>
     <script src="main.js"></script>
 </body>
 
