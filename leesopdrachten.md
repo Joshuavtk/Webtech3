@@ -17,3 +17,9 @@ a. Ik vind dat de schrijver van dit artikel sterke argumenten heeft voor mobile-
 1. De voornaamste methode die besproken wordt is het volledig disablen van JavaScript in de browser. Discord is een witte pagina, Google.com werkt maar er mist heel veel styling waardoor de website minder mooi is. Reddit.com werkt maar je kunt op niks klikken, Wikipedia werkt en houdt er rekening mee en klapt alles standaard uit.
 
 2. Omdat JavaScript problemen kan hebben met security en privacy, aangezien JavaScript je veel dingen kan laten doen, terwijl de programmeur mischien niet snapt wat hij doet. Andere talen zouden een strengere beveiliging kunnen hebben. Persoonlijk vindt ik dit ook een belangrijke reden om JavaScript te vervangen, of het is in ieder geval iets om op te letten. Op dit moment dragen programmeurs van websites veel verantwoordelijkheden om de gebruiker te beveiligen, en het moet naar mijn mening makkelijker voor hun worden om te weten of ze goede en veilige code schrijven.
+
+## Memory 4
+
+Een van de redenen waarom Web Components volgens het artikel geleerd moeten worden is omdat het gebruik van de technologie helpt bij vendor lock-in. In het artikel wordt een voorbeeld gegeven van een bedrijf dat een custom React library geschreven heeft om bepaalde elementen te definiëren zodat code niet hergebruikt wordt. In het geval dat er een nieuw framework ontwikkeld wordt wat beter is dan React, is het moeilijk om naar dit framework te migreren aangezien je vast zit aan de custom React library, en die is waarschijnlijk niet zomaar te migreren naar het nieuwe framework, wat leidt tot vendor lock-in.
+
+Aangezien Web Components een standaard is die gebruikt kan worden om elementen te definiëren, kan deze dezelfde functionaliteit vervullen als de custom React library, maar nu met het voordeel dat het makkelijker te migreren is naar een ander framework, omdat het een webstandaard is.
