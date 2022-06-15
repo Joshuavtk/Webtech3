@@ -178,22 +178,13 @@ function getRandomValue(currentArray, getFunction) {
 }
 
 // Board creation w/wo API
-function createAlphabetBoard() {
-    let cardValues = [];
-    for (let index = 0; index < cardNum / 2; index++) {
-        let cardValue = getNewRandomValueFromArray(cardValues, alphabet);
-        cardValues.push([cardValue, index]);
-    }
-    createCardBlocks(cardValues, "text");
-}
-
 function createPicsumBoard() {
     let cardValues = [];
     for (let index = 0; index < cardNum / 2; index++) {
         getRandomValue(cardValues, getRandomPicture).then((cardValue) => {
             cardValues.push([cardValue, index]);
             if (cardValues.length == cardNum / 2) {
-                createCardBlocks(cardValues, "image");
+                createCardBlocks(cardValues);
             }
         });
     }
@@ -221,7 +212,7 @@ function createRedditBoard() {
                 }
             }
 
-            createCardBlocks(pictures, "image");
+            createCardBlocks(pictures);
         });
 }
 
@@ -229,12 +220,12 @@ function createDogCeoBoard() {
     let cardValues = [];
     getDogPictures(cardNum / 2).then((data) => {
         data.forEach((cardValue, index) => cardValues.push([cardValue, index]));
-        createCardBlocks(cardValues, "image");
+        createCardBlocks(cardValues);
     });
 }
 
 // Board Creation
-function createCardBlocks(cardValues, type) {
+function createCardBlocks(cardValues) {
     // Duplicate values in array
     cardValues.push(...cardValues);
 
@@ -245,13 +236,13 @@ function createCardBlocks(cardValues, type) {
         .map(({ value }) => value);
 
     for (let index = 0; index < cardNum; index++) {
-        let card = createCard(cardValues[index][0], cardValues[index][1], type);
+        let card = createCard(cardValues[index][0], cardValues[index][1]);
 
         gameContainer.append(card);
     }
 }
 
-function createCard(value, index, type) {
+function createCard(value, index) {
     let gameBlock = document.createElement("div");
     gameBlock.classList.add("game_block");
     gameBlock.setAttribute("data-id", index);
@@ -260,16 +251,9 @@ function createCard(value, index, type) {
     gameBlockInner.classList.add("block_inner");
 
     gameBlock.appendChild(gameBlockInner);
-    let blockValue;
-    if (type == "text") {
-        blockValue = document.createElement("div");
-        blockValue.innerText = value;
-        blockValue.classList.add("value");
-    } else {
-        blockValue = document.createElement("div");
-        blockValue.style.backgroundImage = `url("${value}")`;
-        blockValue.classList.add("value");
-    }
+    let blockValue = document.createElement("div");
+    blockValue.style.backgroundImage = `url("${value}")`;
+    blockValue.classList.add("value");
 
     let blockPlaceholder = document.createElement("div");
     blockPlaceholder.innerHTML = "*";
