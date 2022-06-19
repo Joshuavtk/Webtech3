@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>    
+    <title>Login</title>
     <style>
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
+
         form {
             display: flex;
             flex-direction: column;
-            align-items:flex-end;
+            align-items: flex-end;
             max-width: 400px;
         }
-        h2, #message {
+
+        h2,
+        #message {
             text-align: center;
+        }
+
+        #status {
+            color: red;
         }
 
         #message {
             color: deepskyblue;
         }
 
+        fieldset {
+            display: contents;
+        }
     </style>
 </head>
+
 <body>
     <h2>Memory inlog pagina</h2>
     <div id="message"></div>
 
     <form id="form">
-        <label for="username">Gebruikernaam:
-            <input type="text" id="username" name="username">
-        </label>
-        <label for="password">Wachtwoord:
-            <input type="password" id="password" name="password">
-        </label>
-        <a href="register.html">
-            Geen account? klik hier om te registreren.
-        </a>
-        <input type="submit" id="login_submit" value="Opslaan">
+        <fieldset>
+            <label for="username">Gebruikersnaam:
+                <input type="text" id="username" name="username">
+            </label>
+            <label for="password">Wachtwoord:
+                <input type="password" id="password" name="password">
+            </label>
+            <p id="status"></p>
+            <a href="register.html">
+                Geen account? klik hier om te registreren.
+            </a>
+
+            <input type="submit" id="login_submit" value="Opslaan">
+        </fieldset>
     </form>
 
+    <script src="jwt.js"></script>
     <script src="login.js">
     </script>
 </body>
+
 </html>

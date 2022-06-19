@@ -1,3 +1,5 @@
+const backend_url = "http://127.0.0.1:8000"
+
 function decodeJWT(encoded) {
     let base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
     let decoded = decodeURIComponent(

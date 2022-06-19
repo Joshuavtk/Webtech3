@@ -42,7 +42,7 @@ function getUserPreferences() {
     let id = gameOptions.user_id;
     let jwt = gameOptions.jwt;
 
-    fetch(`http://127.0.0.1:8000/api/player/${id}/preferences`, {
+    fetch(`${backend_url}/api/player/${id}/preferences`, {
         headers: {
             Authorization: "Bearer " + jwt,
         },
@@ -92,7 +92,7 @@ function setUserPreferences() {
     let u_id = gameOptions.user_id;
     let jwt = gameOptions.jwt;
 
-    fetch(`http://127.0.0.1:8000/api/player/${u_id}/preferences`, {
+    fetch(`${backend_url}/api/player/${u_id}/preferences`, {
         headers: {
             Authorization: "Bearer " + jwt,
         },
@@ -106,7 +106,7 @@ function setUserPreferences() {
 }
 
 function getUserScores() {
-    fetch(`http://127.0.0.1:8000/scores`)
+    fetch(`${backend_url}/scores`)
         .then((res) => res.json())
         .then((res) => {
             let scoreList = document.querySelector("#user_scores");

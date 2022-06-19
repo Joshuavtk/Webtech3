@@ -10,14 +10,15 @@
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
-        
+
         form {
             display: flex;
             flex-direction: column;
-            align-items:flex-end;
+            align-items: flex-end;
             max-width: 400px;
         }
-        form > * {
+
+        form>* {
             margin: 5px 0;
         }
 
@@ -25,6 +26,9 @@
             text-align: center;
         }
 
+        fieldset {
+            display: contents;
+        }
     </style>
 </head>
 
@@ -32,15 +36,17 @@
 
     <h2>Verander je email</h2>
     <form id="form">
-        <label>Email:
-            <input type="email" id="email" name="email">
-        </label>
-        <a href="/">
-            Terug naar memory.
-        </a>
-        <input type="submit" id="change_email_submit" value="Opslaan">
+        <fieldset>
+            <label>Email:
+                <input type="email" id="email" name="email">
+            </label>
+            <a href="/">
+                Terug naar memory.
+            </a>
+            <input type="submit" id="change_email_submit" value="Opslaan">
+        </fieldset>
     </form>
-            
+
     <p id="status"></p>
 
     <script src="jwt.js"></script>

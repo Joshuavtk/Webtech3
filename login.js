@@ -22,10 +22,12 @@ document.querySelector("#login_submit").addEventListener("click", (ev) => {
 
     let form = document.querySelector("#form");
 
+    form.querySelector('fieldset').setAttribute("disabled", "true")
+
     let username = form.querySelector("#username").value;
     let password = form.querySelector("#password").value;
 
-    fetch("http://127.0.0.1:8000/api/login_check", {
+    fetch(`${backend_url}/api/login_check`, {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -33,10 +35,22 @@ document.querySelector("#login_submit").addEventListener("click", (ev) => {
         method: "POST",
         body: `{"password": "${password}", "username": "${username}" }`,
     })
+        .catch(err => {
+            console.log(err)
+            document.querySelector("#status").innerText = `Kan geen verbinding maken met de back-end. Gebruikte url: ${backend_url}`
+            form.querySelector('fieldset').removeAttribute("disabled")
+        })
         .then((data) => data.json())
         .then((data) => {
-            localStorage.setItem("JWT", data.token);
-            redirectToMemory();
+            form.querySelector('fieldset').removeAttribute("disabled")
+
+            let status = document.querySelector("#status");
+            if (data.code === 401) {
+                status.innerText = "Incorrecte inloggegevens.";
+            } else {
+                localStorage.setItem("JWT", data.token);
+                redirectToMemory();
+            }
         });
 });
 
