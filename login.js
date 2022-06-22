@@ -55,5 +55,5 @@ document.querySelector("#login_submit").addEventListener("click", (ev) => {
 });
 
 function redirectToMemory() {
-    window.location.href = "/";
+    window.location.href = frontend_url + "/";
 }

@@ -1,0 +1,45 @@
+.wrapper {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: grid;
+
+  grid-template:
+    "navigation"
+    "table"
+    "pie_chart";
+}
+.wrapper div {
+
+  padding: 0 10px;
+}
+
+.wrapper h3 {
+  flex-grow: 1;
+  margin: 0;
+}
+
+nav {
+  grid-area: navigation;
+  width: 100%;
+  height: 3em;
+  background-color: lightgrey;
+  display: flex;
+}
+
+a {
+  text-align: right;
+}
+
+
+h1 {
+    text-align: center;
+}
+
+@media screen and (min-width: 850px) {
+
+  .wrapper {
+    grid-template:
+      "navigation navigation"
+      "table pie_chart";
+  }
+
+}

@@ -1,0 +1,23 @@
+<div class="wrapper">
+
+  <nav>
+    <h3>
+      Memory game beheer
+
+    </h3>
+
+    <a href="/">Terug naar memory game</a>
+  </nav>
+
+<div>
+  <h1>Welkom admin {{jwtService.getUsername()}}!</h1>
+  <h3>Totaal aantal spelers: {{game_data.total_players}}</h3>
+  <app-player-table [player_data]="player_data"></app-player-table>
+</div>
+
+<div>
+  <h3>Totaal aantal games: {{game_data.total_games}}</h3>
+  <app-api-pie-chart *ngIf="game_data.chosen_apis" [api_data]="game_data.chosen_apis" [total_games]="game_data.total_games"></app-api-pie-chart>
+</div>
+
+</div>

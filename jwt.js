@@ -1,4 +1,5 @@
 const backend_url = "http://127.0.0.1:8000"
+const frontend_url = "http://127.0.0.1/Webtech3"
 
 function decodeJWT(encoded) {
     let base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
@@ -27,6 +28,6 @@ function getJWTInfo() {
 
         return [decodedHeader, decodedBody];
     } else {
-        window.location.href = "/login.html?msg=not_logged_in";
+        window.location.href = frontend_url + "/login.html?msg=not_logged_in";
     }
 }

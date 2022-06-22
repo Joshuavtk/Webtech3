@@ -1,0 +1,49 @@
+.pie_chart {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+}
+
+
+.pie_chart_wrapper {
+  display: block;
+  text-align: center;
+}
+
+
+.piece_of_pie {
+  padding: 4px;
+  margin: 3px;
+  display: inline-block;
+}
+
+
+#piece_of_pie_dogceo {
+  background-color: pink;
+}
+
+#piece_of_pie_picsum {
+  background-color: lightblue;
+}
+
+#piece_of_pie_reddit {
+  background-color: orange;
+}
+
+@media screen and (min-width: 850px) {
+
+  .pie_chart_wrapper {
+    display: flex;
+  }
+
+  .pie_chart {
+    margin: 0;
+  }
+
+  .piece_of_pie {
+    margin: 3px 0;
+    display: block;
+  }
+
+}

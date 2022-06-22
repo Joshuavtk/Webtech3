@@ -1,0 +1,15 @@
+<table class="player_table">
+
+  <thead>
+    <th>Gebruikersnaam</th>
+    <th>Email</th>
+  </thead>
+
+<tbody>
+  <tr class="player_row {{i % 2 ? 'even' : 'odd'}}" *ngFor="let item of player_data; let i = index">
+    <td>{{item.username}}</td>
+    <td>{{item.email}}</td>
+  </tr>
+</tbody>
+
+</table>

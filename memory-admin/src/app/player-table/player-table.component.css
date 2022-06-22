@@ -1,0 +1,32 @@
+.player_table {
+  /* display: flex; */
+  width: 100%;
+}
+
+thead, th, tbody, tr, td, table  {
+  border: 1px solid black;
+  border-spacing: 0;
+}
+
+th, td {
+  padding: 5px;
+}
+
+
+thead {
+  background-color: lightcyan;
+}
+
+.player_row.even {
+  background-color: orange;
+}
+.player_row.odd {
+  background-color: lightblue
+}
+
+@media screen and (min-width: 850px) {
+
+  .player_table {
+    width: auto;
+  }
+}

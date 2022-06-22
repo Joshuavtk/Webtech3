@@ -1,0 +1,18 @@
+
+<div class="pie_chart_wrapper">
+
+  <div class="pie_chart"
+  *ngIf="pie_chart_degrees.length"
+  [ngStyle]="
+  {'font-size': '2em',
+  'background-image': 'conic-gradient(pink ' + pie_chart_degrees[0] + 'deg, lightblue 0 ' + pie_chart_degrees[1] + 'deg, orange 0)'}
+  ">
+</div>
+
+<div>
+  <div class="piece_of_pie" id="piece_of_pie_{{item.api}}" *ngFor="let item of api_data" [attr.data-amount]="item.aantal">
+    {{item.api.charAt(0).toUpperCase() + item.api.slice(1)}}: {{item.aantal}}
+  </div>
+</div>
+
+</div>

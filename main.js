@@ -51,7 +51,7 @@ function getUserPreferences() {
         .then((res) => {
             if (res.status !== 200) {
                 localStorage.removeItem("JWT");
-                window.location.href = "login.html?msg=session_expired";
+                window.location.href = frontend_url + "/login.html?msg=session_expired";
             }
             return res.json();
         })
@@ -386,7 +386,7 @@ document.querySelector("#log_out").addEventListener("click", log_out);
 function log_out(ev) {
     ev.preventDefault();
     localStorage.removeItem("JWT");
-    window.location.href = "login.html";
+    window.location.href = frontend_url + "/login.html";
 }
 
 // Start default game

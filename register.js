@@ -19,7 +19,7 @@ document.querySelector("#register_submit").addEventListener("click", (ev) => {
         let status = document.querySelector("#status");
         if (data.status == 201) {
             status.innerText = "Account aangemaakt gelukt!";
-            window.location.href = "login.html?msg=register_success"
+            window.location.href = frontend_url + "/login.html?msg=register_success"
         } else {
             status.innerText = "Mislukt, probeer opnieuw.";
         }
