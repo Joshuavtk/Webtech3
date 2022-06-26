@@ -24,14 +24,12 @@ export class BackendApiService {
     })
       .then(data => {
         if (data.status != 200) {
-          // TODO
-          // window.location.href = window.location.origin + window.location.pathname + "/login.html?msg=session_expired";
+          window.location.href = "../../login.html?msg=session_expired";
         }
 
         return data.json()
       })
       .then(data => {
-        console.log(data[2])
         this.game_data.total_games = data[0].aantal_spellen
         this.game_data.total_players = data[1].aantal_spelers
         this.game_data.chosen_apis = data[2]
@@ -53,7 +51,7 @@ export class BackendApiService {
       .then(data => {
         if (data.status != 200) {
           // TODO
-          //window.location.href = window.location.origin + window.location.pathname + "/login.html?msg=session_expired";
+          window.location.href = "../../login.html?msg=session_expired";
         }
 
         return data.json()

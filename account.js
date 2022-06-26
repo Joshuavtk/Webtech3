@@ -17,7 +17,7 @@ fetch(`${backend_url}/api/player/${id}/email`, {
     })
     .catch((err) => {
         localStorage.removeItem("JWT");
-        window.location.href = "login.html?msg=session_expired";
+        window.location.href = frontend_url + "/login.html?msg=session_expired";
     });
 
 document

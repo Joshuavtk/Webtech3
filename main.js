@@ -39,6 +39,10 @@ function getUserPreferences() {
     gameOptions.username = decodedJWT[1].username;
     gameOptions.user_role = decodedJWT[1].roles;
 
+    if (!gameOptions.user_role.includes("ROLE_ADMIN")) {
+        document.querySelector("#admin_link").style.display = "none";
+    }
+
     let id = gameOptions.user_id;
     let jwt = gameOptions.jwt;
 
@@ -64,7 +68,7 @@ function getUserPreferences() {
                     typeSelector.children[gameOptions.cardType].index;
             }
 
-            if (data.color_closed) {
+            if (data.color_closed && data.color_closed.length > 1) {
                 gameOptions.closedColor = data.color_closed;
                 updateCardColor(
                     `--card-color-default`,
@@ -74,7 +78,7 @@ function getUserPreferences() {
                     gameOptions.closedColor;
             }
 
-            if (data.color_found) {
+            if (data.color_found && data.color_closed.length > 1) {
                 gameOptions.correctColor = data.color_found;
                 updateCardColor(
                     `--card-color-correct`,
