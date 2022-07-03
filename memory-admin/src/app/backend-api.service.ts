@@ -27,6 +27,7 @@ export class BackendApiService {
       })
         .then(data => {
           if (data.status != 200) {
+            localStorage.removeItem("JWT")
             window.alert("Sessie verlopen, log opnieuw in.");
             return;
           }
