@@ -41,6 +41,9 @@ function getUserPreferences() {
 
     if (!gameOptions.user_role.includes("ROLE_ADMIN")) {
         document.querySelector("#admin_link").style.display = "none";
+    } else {
+        let link = document.querySelector("#admin_link")
+        link.href= admin_url + "/?JWT=" + gameOptions.jwt;
     }
 
     let id = gameOptions.user_id;

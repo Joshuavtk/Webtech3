@@ -4,16 +4,30 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class JwtService {
+  jwt: String = "";
 
-  constructor() { }
+  constructor() {
+    let jwt = localStorage.getItem("JWT")
+    if (jwt) {
+      this.jwt = jwt
+    } else {
+      jwt = (new URLSearchParams(window.location.search)).get("JWT")
+      if (jwt) {
+        localStorage.setItem("JWT", jwt)
+        this.jwt = jwt
+      } else {
+        window.alert("Geen JWT token gevonden, log eerst in.");
+      }
+    }
+  }
 
   getJWT() {
-    return localStorage.getItem("JWT")
+    return this.jwt
   }
 
   getUsername(): string {
     return this.decodeJWT(
-      this.getJWT()?.split(".")[1] || "").username
+      this.jwt.split(".")[1] || "").username
   }
 
   decodeJWT(encoded: string) {

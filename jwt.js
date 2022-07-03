@@ -1,4 +1,5 @@
 const backend_url = "http://127.0.0.1:8000"
+const admin_url = "http://127.0.0.1:4200"
 const frontend_url = "http://127.0.0.1/Webtech3"
 
 function decodeJWT(encoded) {

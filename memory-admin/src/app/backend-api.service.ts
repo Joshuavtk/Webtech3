@@ -17,53 +17,64 @@ export class BackendApiService {
   aggregateGames(): GameData {
     let jwt = this.jwt.getJWT()
 
-    fetch(environment.backend_url + "/api/admin/aggregate", {
-      headers: {
-        Authorization: "Bearer " + jwt,
-      }
-    })
-      .then(data => {
-        if (data.status != 200) {
-          window.location.href = "../../login.html?msg=session_expired";
+    if (jwt) {
+
+
+      fetch(environment.backend_url + "/api/admin/aggregate", {
+        headers: {
+          Authorization: "Bearer " + jwt,
         }
-
-        return data.json()
       })
-      .then(data => {
-        this.game_data.total_games = data[0].aantal_spellen
-        this.game_data.total_players = data[1].aantal_spelers
-        this.game_data.chosen_apis = data[2]
+        .then(data => {
+          if (data.status != 200) {
+            window.alert("Sessie verlopen, log opnieuw in.");
+            return;
+          }
 
-        return this.game_data
-      })
+          return data.json()
+        })
+        .then(data => {
+          if (data) {
 
+            this.game_data.total_games = data[0].aantal_spellen
+            this.game_data.total_players = data[1].aantal_spelers
+            this.game_data.chosen_apis = data[2]
+
+            return this.game_data
+          }
+          return;
+        })
+
+    }
     return this.game_data
   }
 
   aggregatePlayers(): PlayerData[] {
     let jwt = this.jwt.getJWT()
 
-    fetch(environment.backend_url + "/api/admin/players", {
-      headers: {
-        Authorization: "Bearer " + jwt,
-      }
-    })
-      .then(data => {
-        if (data.status != 200) {
-          // TODO
-          window.location.href = "../../login.html?msg=session_expired";
+    if (jwt) {
+
+      fetch(environment.backend_url + "/api/admin/players", {
+        headers: {
+          Authorization: "Bearer " + jwt,
         }
-
-        return data.json()
       })
-      .then((data: PlayerData[]) => {
+        .then(data => {
+          if (data.status != 200) {
+            return [];
+          }
 
-        data.forEach((player: PlayerData) => {
-          this.player_data.push(player)
+          return data.json()
         })
+        .then((data: PlayerData[]) => {
 
-        return this.player_data
-      })
+          data.forEach((player: PlayerData) => {
+            this.player_data.push(player)
+          })
+
+          return this.player_data
+        })
+    }
     return this.player_data
   }
 }
